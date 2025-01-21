@@ -19,7 +19,7 @@ export default function CardList({ data, navigation }) {
       toValue: 1.1,
       friction: 3,
       tension: 100,
-      useNativeDriver: true,
+      useNativeDriver: Platform.OS !== "web",
     }).start();
   };
 
@@ -28,7 +28,7 @@ export default function CardList({ data, navigation }) {
       toValue: 1,
       friction: 3,
       tension: 100,
-      useNativeDriver: true,
+      useNativeDriver: Platform.OS !== "web",
     }).start();
   };
 
@@ -36,7 +36,7 @@ export default function CardList({ data, navigation }) {
     <View style={styles.cardList}>
       {data.map((card, index) => (
         <TouchableOpacity
-          key={card.id || index} // Уникальный ключ (card.id предпочтительнее)
+          key={card.id || index}
           onPress={() => navigation.navigate("Films", { card })}
           {...(Platform.OS === "web" && {
             onMouseEnter: () => handleMouseEnter(index),
@@ -45,11 +45,18 @@ export default function CardList({ data, navigation }) {
         >
           <Animated.View
             style={[
-              styles.card,
+              Platform.OS === "web" ? styles.cardWeb : styles.cardMobile,
               { transform: [{ scale: scaleValues[index] }] },
             ]}
           >
-            <Image source={card.img} style={styles.cardPhoto} />
+            <Image
+              source={card.img}
+              style={
+                Platform.OS === "web"
+                  ? styles.cardPhoto
+                  : styles.cardPhotoMobile
+              }
+            />
             <View>
               <Text style={styles.cardTitle}>{card.title}</Text>
               <Text style={styles.cardSubtitle}>{card.subtitle}</Text>

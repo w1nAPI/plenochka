@@ -1,29 +1,34 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+
+const { width, height } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
   cardList: {
+    padding: 10,
     width: "100%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
   },
   cardWeb: {
-    width: "100%",
+    width: width * 0.3,
+    height: width * 0.3,
     borderRadius: 10,
-    overflow: "hidden",
-    backgroundColor: "#fff",
+    alignItems: "center",
   },
   cardMobile: {
-    width: "33%",
-    borderRadius: 10,
-    overflow: "hidden",
-    backgroundColor: "#fff",
+    borderRadius: 8,
+    alignItems: "center",
   },
   cardPhoto: {
-    width: "100%", // Изображение по ширине карточки
-    height: 150, // Высота изображения    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    resizeMode: "contain", // Изображение не искажено
+    width: width * 0.2,
+    height: width * 0.2,
+    resizeMode: "contain",
+  },
+  cardPhotoMobile: {
+    width: width * 0.4,
+    height: width * 0.4,
+    resizeMode: "contain",
   },
   cardTitle: {
     fontSize: 16,
