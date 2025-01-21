@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import { View, Text, Image } from "react-native";
 import styles from "./Info.styles";
 
 export default function Info() {
@@ -16,7 +16,7 @@ export default function Info() {
         </View>
       </View>
       <Image
-        source={require("../../assets/info.jpg")} // Путь к изображению
+        source={require("../../assets/info.jpg")} 
         style={styles.infoPhoto}
       />
     </View>

@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, ScrollView, Platform } from "react-native";
+import { SafeAreaView, ScrollView, Platform} from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./page";
 import Films from "./films/page";
@@ -7,6 +7,8 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { isMobile } from "react-device-detect";
 import styles from "./globals";
+import Hits from "./hits/page";
+import New from "./new/page";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +37,16 @@ export default function RootLayout() {
           name="Films"
           component={Films}
           options={{ title: "Фильмы" }}
+        />
+        <Stack.Screen
+          name="Hits"
+          component={Hits}
+          options={{ title: "Хиты" }}
+        />
+        <Stack.Screen
+          name="New"
+          component={New}
+          options={{ title: "Новинки" }}
         />
       </Stack.Navigator>
       <Footer />

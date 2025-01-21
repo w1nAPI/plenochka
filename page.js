@@ -5,10 +5,9 @@ import { cardData } from "./data/cardData";
 import { View } from "react-native";
 
 export default function Home({ navigation }) {
-  console.log("Home component is rendering");
   return (
     <View>
-      <Banner />
+      <Banner navigation={navigation} />
       <Info />
       <Catalog data={cardData} navigation={navigation} />
     </View>
