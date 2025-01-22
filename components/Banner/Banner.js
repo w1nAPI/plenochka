@@ -1,8 +1,11 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import { ImageBackground } from "react-native";
 import styles from "./Banner.styles";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Banner() {
+  const navigation = useNavigation();
+
   return (
     <ImageBackground
       source={require("../../assets/bannerBack.jpg")}
@@ -18,10 +21,20 @@ export default function Banner() {
             <Text style={styles.bannerListContent}>Магазин</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text style={styles.bannerListContent}>Хиты</Text>
+            <Text
+              style={styles.bannerListContent}
+              onPress={() => navigation.navigate("Hits")}
+            >
+              Хиты
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text style={styles.bannerListContent}>Новики</Text>
+            <Text
+              style={styles.bannerListContent}
+              onPress={() => navigation.navigate("New")}
+            >
+              Новики
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
