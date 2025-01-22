@@ -1,5 +1,5 @@
-import React from "react";
-import { SafeAreaView, ScrollView, Platform} from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView, ScrollView, Platform, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./page";
 import Films from "./films/page";
@@ -9,8 +9,11 @@ import { isMobile } from "react-device-detect";
 import styles from "./globals";
 import Hits from "./hits/page";
 import New from "./new/page";
+import Overlay from "./components/Overlay/Overlay";
 
 const Stack = createStackNavigator();
+const isWeb = Platform.OS === "web";
+const isDesktopBrowser = isWeb && !isMobile;
 
 function HomeScreen({ navigation }) {
   return (
@@ -20,10 +23,9 @@ function HomeScreen({ navigation }) {
   );
 }
 
-const isWeb = Platform.OS === "web";
-const isDesktopBrowser = isWeb && !isMobile;
-
 export default function RootLayout() {
+  const [overlayVisible, setOverlayVisible] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       {isDesktopBrowser && <Header />}
@@ -49,7 +51,17 @@ export default function RootLayout() {
           options={{ title: "Новинки" }}
         />
       </Stack.Navigator>
-      <Footer />
+
+      <Overlay
+        visible={overlayVisible}
+        onClose={() => setOverlayVisible(false)}
+      >
+        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>
+          Добро пожаловать!
+        </Text>
+        <Text>Это ваш аккаунт. Здесь будет форма регистрации/входа.</Text>
+      </Overlay>
+      <Footer onAccountPress={() => setOverlayVisible(true)} />
     </SafeAreaView>
   );
 }
