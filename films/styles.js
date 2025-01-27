@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
 const isMobile = width < 768;
 
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f9f9f9",
@@ -78,5 +78,3 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
 });
-
-export default styles;

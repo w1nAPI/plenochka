@@ -10,6 +10,8 @@ import styles from "./globals";
 import Hits from "./hits/page";
 import New from "./new/page";
 import Overlay from "./components/Overlay/Overlay";
+import AuthOverlay from "./components/AuthOverlay/AuthOverlay";
+import CartOverlay from "./components/CartOverlay/CartOverlay";
 
 const Stack = createStackNavigator();
 const isWeb = Platform.OS === "web";
@@ -24,7 +26,8 @@ function HomeScreen({ navigation }) {
 }
 
 export default function RootLayout() {
-  const [overlayVisible, setOverlayVisible] = useState(false);
+  const [overlayAuthVisible, setOverlayAuthVisible] = useState(false);
+  const [overlayCartVisible, setOverlayCartVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -52,16 +55,19 @@ export default function RootLayout() {
         />
       </Stack.Navigator>
 
-      <Overlay
-        visible={overlayVisible}
-        onClose={() => setOverlayVisible(false)}
-      >
-        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>
-          Добро пожаловать!
-        </Text>
-        <Text>Это ваш аккаунт. Здесь будет форма регистрации/входа.</Text>
-      </Overlay>
-      <Footer onAccountPress={() => setOverlayVisible(true)} />
+      <AuthOverlay
+        overlay={overlayAuthVisible}
+        setOverlay={setOverlayAuthVisible}
+      />
+
+      <CartOverlay
+        overlay={overlayCartVisible}
+        setOverlay={setOverlayCartVisible}
+      />
+      <Footer
+        onAccountPress={() => setOverlayAuthVisible(true)}
+        onCartPress={() => setOverlayCartVisible(true)}
+      />
     </SafeAreaView>
   );
 }

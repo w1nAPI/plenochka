@@ -3,7 +3,7 @@ import { View, Text, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./Footer.styles";
 
-export default function Footer({ onAccountPress }) {
+export default function Footer({ onAccountPress, onCartPress }) {
   const navigation = useNavigation();
 
   return (
@@ -29,6 +29,12 @@ export default function Footer({ onAccountPress }) {
 
         <Text style={styles.menuContent} onPress={onAccountPress}>
           Акаунт
+        </Text>
+        <Text
+          style={styles.menuContent}
+          onPress={onCartPress}
+        >
+          Корзина
         </Text>
       </View>
     </View>

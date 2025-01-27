@@ -7,11 +7,13 @@ export default function Overlay({ visible, onClose, children }) {
 
   return (
     <View style={styles.overlay}>
-      <View style={styles.content}>
-        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-          <Text style={styles.closeButtonText}>×</Text>
-        </TouchableOpacity>
-        {children}
+      <View style={styles.scrollContainer}>
+        <View style={styles.content}>
+          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+            <Text style={styles.closeButtonText}>×</Text>
+          </TouchableOpacity>
+          {children}
+        </View>
       </View>
     </View>
   );
