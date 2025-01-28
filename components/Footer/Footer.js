@@ -28,7 +28,7 @@ export default function Footer({ onAccountPress, onCartPress }) {
         </Text>
 
         <Text style={styles.menuContent} onPress={onAccountPress}>
-          Акаунт
+          Аккаунт
         </Text>
         <Text
           style={styles.menuContent}
