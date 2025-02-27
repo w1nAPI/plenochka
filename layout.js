@@ -9,7 +9,6 @@ import { isMobile } from "react-device-detect";
 import styles from "./globals";
 import Hits from "./hits/page";
 import New from "./new/page";
-import Overlay from "./components/Overlay/Overlay";
 import AuthOverlay from "./components/AuthOverlay/AuthOverlay";
 import CartOverlay from "./components/CartOverlay/CartOverlay";
 

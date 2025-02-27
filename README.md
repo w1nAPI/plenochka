@@ -1,1 +1,3 @@
 # plenochka
+npm start
+цw
