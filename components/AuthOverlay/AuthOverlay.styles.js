@@ -33,7 +33,7 @@ export default StyleSheet.create({
   button: {
     flex: 1,
     backgroundColor: "#007bff",
-    paddingVertical: 10,  
+    paddingVertical: 10,
     borderRadius: 5,
     marginHorizontal: 5,
     alignItems: "center",
@@ -43,7 +43,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontSize: 13, 
+    fontSize: 13,
     fontWeight: "bold",
     textAlign: "center",
   },

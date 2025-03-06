@@ -5,3 +5,8 @@ export const FILMS_ENDPOINTS = {
   byId: (id) => `${BASE_URL}films/${id}`,
   byCategory: (category) => `${BASE_URL}films/category/${category}`,
 };
+
+export const AUTH_ENDPOINTS = {
+  register: `${BASE_URL}user/register`,
+  login: `${BASE_URL}user/login/`,
+};

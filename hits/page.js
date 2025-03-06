@@ -3,22 +3,14 @@ import { ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import Catalog from "../components/Catalog/Catalog";
-import { getFilmsByCategory } from "../api/filmsApi";
+import { fetchFilmsByCategory } from "../api/films/films.controller";
 
 export default function Hits() {
   const [films, setFilms] = useState([]);
 
   const navigation = useNavigation();
   useEffect(() => {
-    const fetchFilms = async () => {
-      try {
-        const data = await getFilmsByCategory("hits");
-        setFilms(data);
-      } catch (err) {
-        console.error("Ошибка загрузки фильмов:", err);
-      }
-    };
-    fetchFilms();
+    fetchFilmsByCategory("hits").then(setFilms);
   }, []);
   return (
     <ScrollView>

@@ -1,4 +1,4 @@
-import { FILMS_ENDPOINTS } from "./config";
+import { FILMS_ENDPOINTS } from "../config";
 
 export const getFilms = async () => {
   try {
@@ -24,9 +24,8 @@ export const getFilmById = async (id) => {
 
 export const getFilmsByCategory = async (category) => {
   try {
-    const response = await fetch(FILMS_ENDPOINTS.byCategory(category)); // Исправлено здесь
-    if (!response.ok)
-      throw new Error(`Ошибка при получении фильмов в категории ${category}`);
+    const response = await fetch(FILMS_ENDPOINTS.byCategory(category));
+    throw new Error(`Ошибка при получении фильмов в категории ${category}`);
     return await response.json();
   } catch (err) {
     console.error(err);

@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, Image, FlatList, TouchableOpacity } from "react-native";
 import Overlay from "../Overlay/Overlay";
-import { cardData } from "../../data/cardData";
+
 import styles from "./CarrOverlay.styles";
 export default function CartOverlay({ overlay, setOverlay }) {
-  const [cartItems, setCartItems] = React.useState(cardData);
+  const [cartItems, setCartItems] = React.useState([]);
 
   const handleOrderAll = () => {
     alert("Все товары заказаны!");

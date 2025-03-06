@@ -2,22 +2,18 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image, ScrollView, TouchableOpacity } from "react-native";
 import CardList from "../components/CardList/CardList";
 import styles from "./styles";
-import { getFilms } from "../api/filmsApi";
+import { fetchFilms } from "../api/films/films.controller";
 
 export default function Films({ route, navigation }) {
   const { card } = route.params || {};
   const [films, setFilms] = useState([]);
 
   useEffect(() => {
-    const fetchFilms = async () => {
-      try {
-        const data = await getFilms();
-        setFilms(data);
-      } catch (err) {
-        console.error("Ошибка загрузки фильмов:", err);
-      }
+    const fetchAndSetFilms = async () => {
+      const data = await fetchFilms();
+      setFilms(data);
     };
-    fetchFilms();
+    fetchAndSetFilms();
   }, []);
 
   return (
