@@ -10,3 +10,8 @@ export const AUTH_ENDPOINTS = {
   register: `${BASE_URL}user/register`,
   login: `${BASE_URL}user/login/`,
 };
+
+export const CART_ENDPOINTS = {
+  addFilmToCart: (userId) => `${BASE_URL}cart/${userId}`,
+  getCart: `${BASE_URL}cart`,
+};

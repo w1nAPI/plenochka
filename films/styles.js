@@ -22,12 +22,6 @@ export default StyleSheet.create({
     elevation: 3,
     marginBottom: 15,
   },
-  productImageMobile: {
-    width: 150,
-    height: 150,
-    resizeMode: "cover",
-    borderRadius: 8,
-  },
   productImage: {
     flex: 1,
     height: 300,
@@ -64,6 +58,26 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
   },
+  quantityContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 10,
+  },
+  quantityButton: {
+    backgroundColor: "#ddd",
+    padding: 10,
+    borderRadius: 5,
+    marginHorizontal: 5,
+  },
+  quantityButtonText: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  quantityText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginHorizontal: 10,
+  },
   sectionTitle: {
     fontSize: 20,
     marginTop: 15,
@@ -83,30 +97,8 @@ export default StyleSheet.create({
     marginBottom: 10,
     fontWeight: "bold",
   },
-  cardList: {
-    margin: 0,
-    padding: 5,
-  },
   catalog: {
     marginTop: 20,
     marginHorizontal: isMobile ? 10 : 20,
-  },
-  card: {
-    flexBasis: isMobile ? "45%" : "30%",
-    margin: isMobile ? 5 : 15,
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    alignItems: "center",
-  },
-  errorText: {
-    color: "red",
-    fontSize: 16,
-    textAlign: "center",
   },
 });

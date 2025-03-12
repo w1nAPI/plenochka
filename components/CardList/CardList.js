@@ -26,7 +26,7 @@ export default function CardList({ data, navigation }) {
       toValue: 1.1,
       friction: 3,
       tension: 100,
-      useNativeDriver: true, 
+      useNativeDriver: true,
     }).start();
   };
 
@@ -35,7 +35,7 @@ export default function CardList({ data, navigation }) {
       toValue: 1,
       friction: 3,
       tension: 100,
-      useNativeDriver: true, 
+      useNativeDriver: true,
     }).start();
   };
 
@@ -47,7 +47,14 @@ export default function CardList({ data, navigation }) {
         data.map((card, index) => (
           <TouchableOpacity
             key={card.id || index}
-            onPress={() => navigation.navigate("Films", { card })}
+            onPress={() =>
+              navigation.navigate("Films", {
+                card: {
+                  ...card,
+                  filmId: card.filmId || card._id,  
+                },
+              })
+            }
             {...(Platform.OS === "web" && {
               onMouseEnter: () => handleMouseEnter(index),
               onMouseLeave: () => handleMouseLeave(index),
@@ -60,7 +67,7 @@ export default function CardList({ data, navigation }) {
               ]}
             >
               <Image
-                source={{ uri: card.img }}  
+                source={{ uri: card.img }}
                 style={
                   Platform.OS === "web"
                     ? styles.cardPhoto
@@ -68,7 +75,7 @@ export default function CardList({ data, navigation }) {
                 }
                 onError={() =>
                   console.error("Ошибка загрузки изображения:", card.img)
-                } 
+                }
               />
               <View>
                 <Text style={styles.cardTitle}>{card.title}</Text>
