@@ -1,4 +1,5 @@
-import { AUTH_ENDPOINTS} from "../config";
+import { AUTH_ENDPOINTS } from "../config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const parseJSON = async (response) => {
   const text = await response.text();
@@ -22,6 +23,7 @@ export const login = async (email, password, setIsAuth, setOverlay) => {
     const data = await parseJSON(response);
 
     if (response.ok) {
+      await AsyncStorage.setItem("token", data.token); // Сохраняем токен
       setIsAuth(true);
       setOverlay(false);
     } else {
@@ -56,7 +58,8 @@ export const register = async (email, password, loginCallback) => {
   }
 };
 
-export const logout = (setIsAuth, setEmail, setPassword) => {
+export const logout = async (setIsAuth, setEmail, setPassword) => {
+  await AsyncStorage.removeItem("token"); // Удаляем токен при выходе
   setIsAuth(false);
   setEmail("");
   setPassword("");

@@ -4,6 +4,7 @@ import { AuthContext } from "./authContext";
 
 export const AuthProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
+  const [loading, setLoading] = useState(true); // Индикатор загрузки токена
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -14,10 +15,16 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (error) {
         console.error("Ошибка при получении токена", error);
+      } finally {
+        setLoading(false); // Завершаем проверку
       }
     };
     checkAuthStatus();
   }, []);
+
+  if (loading) {
+    return null; // Можно добавить спиннер загрузки
+  }
 
   return (
     <AuthContext.Provider value={{ isAuth, setIsAuth }}>
