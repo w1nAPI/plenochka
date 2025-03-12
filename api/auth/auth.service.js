@@ -19,11 +19,17 @@ export const login = async (email, password, setIsAuth, setOverlay) => {
       body: JSON.stringify({ email, password }),
     });
 
-    console.log("Ответ сервера:", response);
     const data = await parseJSON(response);
 
     if (response.ok) {
-      await AsyncStorage.setItem("token", data.token); // Сохраняем токен
+      await AsyncStorage.setItem("token", data.token);
+      await AsyncStorage.setItem(
+        "userData",
+        JSON.stringify({ email, userId: data.userId })
+      );
+
+      console.log("User ID сохранен:", data.userId);
+
       setIsAuth(true);
       setOverlay(false);
     } else {
@@ -43,10 +49,15 @@ export const register = async (email, password, loginCallback) => {
       body: JSON.stringify({ email, password }),
     });
 
-    console.log("Ответ сервера:", response);
     const data = await parseJSON(response);
 
     if (response.ok) {
+      console.log("User ID после регистрации:", data.userId);
+      await AsyncStorage.setItem(
+        "userData",
+        JSON.stringify({ email, userId: data.userId })
+      );
+
       alert("Вы зарегистрированы!");
       await loginCallback();
     } else {
@@ -59,8 +70,16 @@ export const register = async (email, password, loginCallback) => {
 };
 
 export const logout = async (setIsAuth, setEmail, setPassword) => {
-  await AsyncStorage.removeItem("token"); // Удаляем токен при выходе
-  setIsAuth(false);
-  setEmail("");
-  setPassword("");
+  try {
+    await AsyncStorage.removeItem("token");
+    await AsyncStorage.removeItem("userData");
+
+    console.log("User ID удален");
+
+    setIsAuth(false);
+    setEmail("");
+    setPassword("");
+  } catch (error) {
+    console.error("Ошибка при выходе", error);
+  }
 };

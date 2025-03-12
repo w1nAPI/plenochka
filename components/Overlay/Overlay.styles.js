@@ -18,6 +18,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     maxHeight: "80%",
     width: "90%",
+    position: "relative", 
   },
   closeButton: {
     position: "absolute",
@@ -25,6 +26,7 @@ export default StyleSheet.create({
     right: 10,
     backgroundColor: "transparent",
     padding: 10,
+    zIndex: 100, 
   },
   closeButtonText: {
     fontSize: 30,

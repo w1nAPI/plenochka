@@ -4,27 +4,26 @@ import { AuthContext } from "./authContext";
 
 export const AuthProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
-  const [loading, setLoading] = useState(true); // Индикатор загрузки токена
 
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
-        if (token) {
-          setIsAuth(true);
+        const userData = await AsyncStorage.getItem("userData");
+
+        if (userData) {
+          const parsedData = JSON.parse(userData);
+          console.log("Загружен User ID:", parsedData.userId);  
         }
+
+        setIsAuth(!!token);
       } catch (error) {
-        console.error("Ошибка при получении токена", error);
-      } finally {
-        setLoading(false); // Завершаем проверку
+        console.error("Ошибка при получении данных аутентификации", error);
       }
     };
+
     checkAuthStatus();
   }, []);
-
-  if (loading) {
-    return null; // Можно добавить спиннер загрузки
-  }
 
   return (
     <AuthContext.Provider value={{ isAuth, setIsAuth }}>

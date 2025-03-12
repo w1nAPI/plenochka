@@ -4,8 +4,7 @@ import Overlay from "../Overlay/Overlay";
 import { useAuth } from "../../hooks/useAuth";
 import styles from "./AuthOverlay.styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AuthController } from "../../api/auth/auth.controller";
-
+import { AuthController } from "../../api/auth/auth.controller";  
 export default function AuthOverlay({ overlay, setOverlay }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,8 +39,16 @@ export default function AuthOverlay({ overlay, setOverlay }) {
     }
   };
 
-  const handleLogout = () => {
-    AuthController.logout(setIsAuth, setEmail, setPassword);
+  const handleLogout = async () => {
+    if (!AuthController || !AuthController.logout) {
+      console.error("AuthController.logout не определен!");
+      return;
+    }
+    try {
+      await AuthController.logout(setIsAuth, setEmail, setPassword);
+    } catch (error) {
+      console.error("Ошибка при выходе:", error);
+    }
   };
 
   return (

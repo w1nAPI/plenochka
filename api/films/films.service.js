@@ -13,7 +13,7 @@ export const getFilms = async () => {
 
 export const getFilmById = async (id) => {
   try {
-    const response = await fetch(FILMS_ENDPOINTS.byId(id)); // Исправлено здесь
+    const response = await fetch(FILMS_ENDPOINTS.byId(id)); 
     if (!response.ok) throw new Error(`Ошибка при получении фильма с ID ${id}`);
     return await response.json();
   } catch (err) {

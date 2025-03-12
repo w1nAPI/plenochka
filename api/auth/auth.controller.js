@@ -3,9 +3,8 @@ import { login, register, logout } from "./auth.service";
 export const AuthController = {
   login: async (email, password, setIsAuth, setOverlay) => {
     try {
-      await login(email, password, setIsAuth, setOverlay); // Передаем setIsAuth
+      await login(email, password, setIsAuth, setOverlay);
     } catch (error) {
-      console.error("Ошибка входа:", error.message);
       throw new Error(error.message);
     }
   },
@@ -14,12 +13,11 @@ export const AuthController = {
     try {
       await register(email, password, handleLogin);
     } catch (error) {
-      console.error("Ошибка регистрации:", error.message);
       throw new Error(error.message);
     }
   },
 
-  logout: (setIsAuth, setEmail, setPassword) => {
-    logout(setIsAuth, setEmail, setPassword);
+  logout: async (setIsAuth, setEmail, setPassword) => {
+    await logout(setIsAuth, setEmail, setPassword);
   },
 };

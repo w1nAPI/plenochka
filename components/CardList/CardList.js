@@ -26,7 +26,7 @@ export default function CardList({ data, navigation }) {
       toValue: 1.1,
       friction: 3,
       tension: 100,
-      useNativeDriver: true, // Всегда используйте useNativeDriver для лучшей производительности
+      useNativeDriver: true, 
     }).start();
   };
 
@@ -35,7 +35,7 @@ export default function CardList({ data, navigation }) {
       toValue: 1,
       friction: 3,
       tension: 100,
-      useNativeDriver: true, // Всегда используйте useNativeDriver для лучшей производительности
+      useNativeDriver: true, 
     }).start();
   };
 
@@ -60,7 +60,7 @@ export default function CardList({ data, navigation }) {
               ]}
             >
               <Image
-                source={{ uri: card.img }} // Используем { uri: card.img }
+                source={{ uri: card.img }}  
                 style={
                   Platform.OS === "web"
                     ? styles.cardPhoto
@@ -68,7 +68,7 @@ export default function CardList({ data, navigation }) {
                 }
                 onError={() =>
                   console.error("Ошибка загрузки изображения:", card.img)
-                } // Обработчик ошибок
+                } 
               />
               <View>
                 <Text style={styles.cardTitle}>{card.title}</Text>
