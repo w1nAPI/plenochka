@@ -1,34 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity } from "react-native";
+import { getCart, removeFilmFromCart } from "../../api/cart/cart.controller";
 import Overlay from "../Overlay/Overlay";
+import styles from "./CartOverlay.styles";
 
-import styles from "./CarrOverlay.styles";
 export default function CartOverlay({ overlay, setOverlay }) {
-  const [cartItems, setCartItems] = React.useState([]);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    if (overlay) {
+      loadCart();
+    }
+  }, [overlay]); 
+
+  const loadCart = async () => {
+    try {
+      const items = await getCart();
+      setCartItems(items);
+    } catch (error) {
+      console.error("Не удалось загрузить корзину", error);
+    }
+  };
+
+  const handleRemove = async (item) => {
+    await removeFilmFromCart(item.id);
+    setCartItems((prev) => prev.filter((i) => i.id !== item.id));
+  };
 
   const handleOrderAll = () => {
     alert("Все товары заказаны!");
-    setCartItems([]);
     setOverlay(false);
   };
 
   const handleOrderOne = (item) => {
-    alert(`Заказана плёнка: ${item.title}`);
-    setCartItems((prevCart) =>
-      prevCart.filter((cartItem) => cartItem.id !== item.id)
-    );
-  };
-
-  const handleRemove = (item) => {
-    setCartItems((prevCart) =>
-      prevCart.filter((cartItem) => cartItem.id !== item.id)
-    );
-    alert(`Удалена плёнка: ${item.title}`);
-  };
-
-  const handleRemoveAll = () => {
-    setCartItems([]);
-    alert("Все товары удалены!");
+    alert(`Заказан фильм: ${item.title}`);
+    setOverlay(false);
   };
 
   return (
@@ -43,9 +49,13 @@ export default function CartOverlay({ overlay, setOverlay }) {
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.cartItem}>
-                <Image source={item.img} style={styles.image} />
+                <Image source={{ uri: item.img }} style={styles.image} />
                 <View style={styles.itemDetails}>
                   <Text style={styles.title}>{item.title}</Text>
+                  <Text style={styles.quantity}>
+                    Количество: {item.quantity}
+                  </Text>
+                  <Text style={styles.price}>Цена: {item.price}</Text>
                 </View>
                 <View style={styles.actions}>
                   <TouchableOpacity
@@ -69,13 +79,7 @@ export default function CartOverlay({ overlay, setOverlay }) {
                   style={styles.orderAllButton}
                   onPress={handleOrderAll}
                 >
-                  <Text style={styles.orderAllText}>Заказать всё</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.removeAllButton}
-                  onPress={handleRemoveAll}
-                >
-                  <Text style={styles.removeAllText}>Удалить всё</Text>
+                  <Text style={styles.orderAllText}>Заказать все</Text>
                 </TouchableOpacity>
               </>
             }

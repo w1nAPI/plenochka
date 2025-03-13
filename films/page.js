@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import CardList from "../components/CardList/CardList";
 import styles from "./styles";
 import { fetchFilms } from "../api/films/films.controller";
-import { handleAddToCart } from "../api/cart/cart.controller";
+import { addFilmToCart } from "../api/cart/cart.service"; 
 
 export default function Films({ route, navigation }) {
   const { card } = route.params || {};
@@ -43,13 +43,17 @@ export default function Films({ route, navigation }) {
     }
 
     if (!card?.filmId) {
-      console.error("Film ID is missing", card);
+      console.error("Film ID is missing");
       return;
     }
 
-    await handleAddToCart(card.filmId, quantity);
+    try {
+      await addFilmToCart({ filmId: card.filmId, quantity });
+      alert("Film added to cart!");
+    } catch (error) {
+      console.error("Failed to add film to cart:", error);
+    }
   };
-
 
   return (
     <ScrollView style={styles.container}>

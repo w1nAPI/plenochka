@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
           console.log("Загружен User ID:", parsedData.userId);  
         }
 
-        setIsAuth(!!token);
+        setIsAuth(!!token); 
       } catch (error) {
         console.error("Ошибка при получении данных аутентификации", error);
       }
