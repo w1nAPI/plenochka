@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import CardList from "../components/CardList/CardList";
 import styles from "./styles";
 import { fetchFilms } from "../api/films/films.controller";
-import { addFilmToCart } from "../api/cart/cart.service"; 
+import { addFilmToCart } from "../api/cart/cart.controller"; 
 
 export default function Films({ route, navigation }) {
   const { card } = route.params || {};

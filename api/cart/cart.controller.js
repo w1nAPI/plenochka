@@ -1,7 +1,6 @@
 import { CART_ENDPOINTS } from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-
 const getUserId = async () => {
   const userData = await AsyncStorage.getItem("userData");
   if (!userData) throw new Error("Данные пользователя не найдены");
@@ -9,24 +8,27 @@ const getUserId = async () => {
   return userId;
 };
 
-
-export const addFilmToCart = async ({ filmId, quantity }) => {
+export const updateFilmQuantityInCart = async ({ filmId, quantity }) => {
   try {
     const userId = await getUserId();
-    const response = await fetch(CART_ENDPOINTS.addFilmToCart(userId), {
-      method: "POST",
+    const url = CART_ENDPOINTS.updateFilmQuantityInCart(userId); 
+    const response = await fetch(url, {
+      method: "PUT",  
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ filmId, quantity }),
+      body: JSON.stringify({
+        filmId,  
+        quantity, 
+      }),
     });
 
-    if (!response.ok) throw new Error("Не удалось добавить фильм в корзину");
+    if (!response.ok)
+      throw new Error("Не удалось обновить количество фильма в корзине");
     return await response.json();
   } catch (error) {
-    console.error("Ошибка при добавлении фильма в корзину:", error);
+    console.error("Ошибка при обновлении фильма в корзине:", error);
     throw error;
   }
 };
-
 
 export const getCart = async () => {
   try {

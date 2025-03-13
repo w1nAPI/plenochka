@@ -16,4 +16,5 @@ export const CART_ENDPOINTS = {
   getCart: (userId) => `${BASE_URL}cart/${userId}`,
   removeFilmFromCart: (userId, filmId) => `${BASE_URL}cart/${userId}/${filmId}`,
   removeAllFromCar: (userId) => `${BASE_URL}cart/${userId}`,
+  updateFilmQuantityInCart: (userId) => `${BASE_URL}cart/${userId}`,
 };

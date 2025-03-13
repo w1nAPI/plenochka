@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity } from "react-native";
-import { getCart, removeFilmFromCart, removeAllFromCart } from "../../api/cart/cart.controller"; // Assuming there's an API function to remove all items
+import {
+  getCart,
+  removeFilmFromCart,
+  removeAllFromCart,
+  updateFilmQuantityInCart,
+} from "../../api/cart/cart.controller"; 
 import Overlay from "../Overlay/Overlay";
 import styles from "./CartOverlay.styles";
 
@@ -28,8 +33,8 @@ export default function CartOverlay({ overlay, setOverlay }) {
   };
 
   const handleRemoveAll = async () => {
-    await removeAllFromCart(); // Assuming this function exists in your API to remove all items
-    setCartItems([]); // Clear the cart in the UI
+    await removeAllFromCart();
+    setCartItems([]);  
   };
 
   const handleOrderAll = () => {
@@ -42,15 +47,23 @@ export default function CartOverlay({ overlay, setOverlay }) {
     setOverlay(false);
   };
 
-  const increaseQuantity = (id) => {
+  const increaseQuantity = async (id) => {
     setCartItems((prev) =>
       prev.map((item) =>
         item.id === id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
+    
+    const updatedItem = cartItems.find((item) => item.id === id);
+    if (updatedItem) {
+      await updateFilmQuantityInCart({
+        filmId: id,
+        quantity: updatedItem.quantity + 1,
+      });
+    }
   };
 
-  const decreaseQuantity = (id) => {
+  const decreaseQuantity = async (id) => {
     setCartItems((prev) =>
       prev.map((item) =>
         item.id === id && item.quantity > 1
@@ -58,6 +71,14 @@ export default function CartOverlay({ overlay, setOverlay }) {
           : item
       )
     );
+ 
+    const updatedItem = cartItems.find((item) => item.id === id);
+    if (updatedItem && updatedItem.quantity > 1) {
+      await updateFilmQuantityInCart({
+        filmId: id,
+        quantity: updatedItem.quantity - 1,
+      });
+    }
   };
 
   return (
