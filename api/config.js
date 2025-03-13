@@ -14,5 +14,6 @@ export const AUTH_ENDPOINTS = {
 export const CART_ENDPOINTS = {
   addFilmToCart: (userId) => `${BASE_URL}cart/${userId}`,
   getCart: (userId) => `${BASE_URL}cart/${userId}`,
-  removeFilmFromCart: (userId, filmId) => `${BASE_URL}cart/${userId}/${filmId}`, 
+  removeFilmFromCart: (userId, filmId) => `${BASE_URL}cart/${userId}/${filmId}`,
+  removeAllFromCar: (userId) => `${BASE_URL}cart/${userId}`,
 };

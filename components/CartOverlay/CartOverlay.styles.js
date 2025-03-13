@@ -84,4 +84,28 @@ export default StyleSheet.create({
     maxHeight: "70vh",
     overflowY: "auto",
   },
+  quantityContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 5,
+  },
+  quantityButton: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: "#007BFF",
+    alignItems: "center",
+    justifyContent: "center",
+    marginHorizontal: 5,
+  },
+  quantityButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  quantityText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
