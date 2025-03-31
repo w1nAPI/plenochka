@@ -11,6 +11,7 @@ export default function Hits() {
   const navigation = useNavigation();
   useEffect(() => {
     fetchFilmsByCategory("hits").then(setFilms);
+    console.log(films);
   }, []);
   return (
     <ScrollView>

@@ -11,13 +11,13 @@ const getUserId = async () => {
 export const updateFilmQuantityInCart = async ({ filmId, quantity }) => {
   try {
     const userId = await getUserId();
-    const url = CART_ENDPOINTS.updateFilmQuantityInCart(userId); 
+    const url = CART_ENDPOINTS.updateFilmQuantityInCart(userId);
     const response = await fetch(url, {
-      method: "PUT",  
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        filmId,  
-        quantity, 
+        filmId,
+        quantity,
       }),
     });
 
@@ -87,6 +87,24 @@ export const removeAllFromCart = async () => {
     return await response.json();
   } catch (error) {
     console.error("Ошибка при удалении всех товаров из корзины:", error);
+    throw error;
+  }
+};
+
+
+export const addFilmToCart = async ({ filmId, quantity }) => {
+  try {
+    const userId = await getUserId();
+    const response = await fetch(CART_ENDPOINTS.addFilmToCart(userId), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ filmId, quantity }),
+    });
+
+    if (!response.ok) throw new Error("Не удалось добавить фильм в корзину");
+    return await response.json();
+  } catch (error) {
+    console.error("Ошибка при добавлении фильма в корзину:", error);
     throw error;
   }
 };

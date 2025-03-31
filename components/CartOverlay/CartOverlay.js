@@ -5,9 +5,10 @@ import {
   removeFilmFromCart,
   removeAllFromCart,
   updateFilmQuantityInCart,
-} from "../../api/cart/cart.controller"; 
+} from "../../api/cart/cart.controller";
 import Overlay from "../Overlay/Overlay";
 import styles from "./CartOverlay.styles";
+import { getFilmById } from "../../api/films/films.service";
 
 export default function CartOverlay({ overlay, setOverlay }) {
   const [cartItems, setCartItems] = useState([]);
@@ -21,7 +22,13 @@ export default function CartOverlay({ overlay, setOverlay }) {
   const loadCart = async () => {
     try {
       const items = await getCart();
-      setCartItems(items);
+      const films = await Promise.all(
+        items.map(async (item) => {
+          const filmDetails = await getFilmById(item.id);
+          return { ...item, ...filmDetails };
+        })
+      );
+      setCartItems(films);
     } catch (error) {
       console.error("Не удалось загрузить корзину", error);
     }
@@ -34,7 +41,7 @@ export default function CartOverlay({ overlay, setOverlay }) {
 
   const handleRemoveAll = async () => {
     await removeAllFromCart();
-    setCartItems([]);  
+    setCartItems([]);
   };
 
   const handleOrderAll = () => {
@@ -47,36 +54,20 @@ export default function CartOverlay({ overlay, setOverlay }) {
     setOverlay(false);
   };
 
-  const increaseQuantity = async (id) => {
+  const updateQuantity = async (id, delta) => {
     setCartItems((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+        item.id === id
+          ? { ...item, quantity: Math.max(1, item.quantity + delta) }
+          : item
       )
     );
-    
+
     const updatedItem = cartItems.find((item) => item.id === id);
     if (updatedItem) {
       await updateFilmQuantityInCart({
         filmId: id,
-        quantity: updatedItem.quantity + 1,
-      });
-    }
-  };
-
-  const decreaseQuantity = async (id) => {
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
- 
-    const updatedItem = cartItems.find((item) => item.id === id);
-    if (updatedItem && updatedItem.quantity > 1) {
-      await updateFilmQuantityInCart({
-        filmId: id,
-        quantity: updatedItem.quantity - 1,
+        quantity: Math.max(1, updatedItem.quantity + delta),
       });
     }
   };
@@ -98,14 +89,14 @@ export default function CartOverlay({ overlay, setOverlay }) {
                   <Text style={styles.title}>{item.title}</Text>
                   <View style={styles.quantityContainer}>
                     <TouchableOpacity
-                      onPress={() => decreaseQuantity(item.id)}
+                      onPress={() => updateQuantity(item.id, -1)}
                       style={styles.quantityButton}
                     >
                       <Text style={styles.quantityButtonText}>-</Text>
                     </TouchableOpacity>
                     <Text style={styles.quantityText}>{item.quantity}</Text>
                     <TouchableOpacity
-                      onPress={() => increaseQuantity(item.id)}
+                      onPress={() => updateQuantity(item.id, 1)}
                       style={styles.quantityButton}
                     >
                       <Text style={styles.quantityButtonText}>+</Text>

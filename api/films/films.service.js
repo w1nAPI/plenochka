@@ -25,10 +25,17 @@ export const getFilmById = async (id) => {
 export const getFilmsByCategory = async (category) => {
   try {
     const response = await fetch(FILMS_ENDPOINTS.byCategory(category));
-    throw new Error(`Ошибка при получении фильмов в категории ${category}`);
+
+    if (!response.ok) {
+      throw new Error(
+        `Ошибка при получении фильмов в категории ${category}: ${response.statusText}`
+      );
+    }
+
     return await response.json();
   } catch (err) {
     console.error(err);
     return [];
   }
 };
+
